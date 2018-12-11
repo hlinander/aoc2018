@@ -32,14 +32,14 @@ distances = for code1 <- codes, code2 <- codes do
   {distance.(code1, code2), code1, code2}
 end
 
-distance_1_codes = distances |> Enum.filter(fn {distance, c1, c2} -> distance == 1 end)
+distance_1_codes = distances |> Enum.filter(fn {distance, _, _} -> distance == 1 end)
 # There are two distance 1 items in the cartesian product
-{distance, code1, code2} = Enum.at(distance_1_codes, 1)
+{_, code1, code2} = Enum.at(distance_1_codes, 1)
 common_chars = [code1, code2]
 |> Enum.map(&(String.codepoints(&1)))
 |> Enum.zip()
 |> Enum.filter(fn {c1, c2} -> c1 == c2 end)
-|> Enum.map(fn {c1, c2} -> c1 end)
+|> Enum.map(fn {c1, _} -> c1 end)
 |> Enum.reduce(fn val, acc -> acc <> val end)
 IO.inspect(common_chars)
 
